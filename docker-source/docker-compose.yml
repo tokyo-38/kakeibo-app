@@ -1,0 +1,23 @@
+version: '3'
+
+services: 
+  postgres: 
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${MY_PG_PASSWORD:-defaultpass}
+      POSTGRES_USER: ${MY_PG_USER:-defaultuser}
+      POSTGRES_DB: kakeibo_db
+      POSTGRES_APP_PASSWORD: ${MY_APP_PASSWORD:-defaultapppass}
+      POSTGRES_APP_USER: ${MY_APP_USER:-defaultappuser}
+      TZ: "Asia/Tokyo"
+      LANG2: "ja_JP.utf8"
+    ports: 
+      - 5433:5432
+    volumes:
+      - postgres:/var/liv/postgresql/data
+volumes: 
+  postgres:
+    driver: local
